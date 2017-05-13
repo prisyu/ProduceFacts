@@ -25,29 +25,38 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <ImageButton
-                android:id="@+id/FruitButton"
+            <Button
+                android:id="@+id/fruitsButton"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_weight="0.23"
-                app:srcCompat="@android:color/holo_red_dark" />
+                android:padding="10dp"
+                android:text="Fruit"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/menu_fruits"
+                android:onClick="produceSelected"
+                />
 
-            <ImageButton
-                android:id="@+id/VegetablesButton"
+            <Button
+                android:id="@+id/vegetablesButton"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_weight="0.30"
-                android:adjustViewBounds="false"
-                android:cropToPadding="false"
-                app:srcCompat="@android:color/holo_green_light" />
+                android:padding="10dp"
+                android:text="Vegetables"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/menu_vegetables"
+                android:onClick="produceSelected"
+                />
 
-            <ImageButton
-                android:id="@+id/OrnamentalsButton"
+            <Button
+                android:id="@+id/ornamentalsButton"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_weight="1.62"
-                android:adjustViewBounds="false"
-                app:srcCompat="@android:color/holo_purple" />
+                android:padding="10dp"
+                android:text="Ornamentals"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/menu_ornamentals"
+                android:onClick="produceSelected"
+                />
 
         </LinearLayout>
     </LinearLayout>
