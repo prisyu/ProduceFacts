@@ -14,9 +14,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String menuItemLanguages[][] = {{"Fruit", "Vegetables", "Ornamentals"},{"Frutas", "Vegetales", "Ornamentales"},{"Fruit", "Les Légume", "Ornamentals"}};
     //menu item is ONLY for set title.  The arrays below are for the actual parsing
     public static final String recommendationLanguages[] = {"Recommendations for Maintaining Postharvest Quality","Recomendaciones para Mantener la Calidad Postcosecha", "Recommendations for Maintaining Postharvest Quality"};
-    public static final String maturityLanguages[] = {"Maturity & Quality", "Cosecha y Calidad", "Maturity & Quality"};
-    public static final String temperatureLanguages[] = {"Temperature & Controlled Atmosphere", "Temperatura y Atmosfera Controlada", "Temperature & Controlled Atmosphere"};
-    public static final String disorderLanguages[] = {"Disorders", "Desordenes", "Disorders"};
+
     public static final String languages[] = {"English", "Spanish", "French"};
     public static final int languageSelected = 0;
     public static final int produceSelected = 0;
