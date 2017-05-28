@@ -14,46 +14,90 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class CategoryActivity extends AppCompatActivity {
 
-    private int languageSelected;
-    private static final String maturityLanguages[] = {"Maturity & Quality", "Cosecha y Calidad", "Maturity & Quality"};
-    private static final String temperatureLanguages[] = {"Temperature & Controlled Atmosphere", "Temperatura y Atmosfera Controlada", "Temperature & Controlled Atmosphere"};
-    private static final String disorderLanguages[] = {"Disorders", "Desordenes", "Disorders"};
-
+    public static Commodity commoditySelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
-        languageSelected = MainActivity.languageSelected;
-
         Button maturityButton = (Button) findViewById(R.id.maturityButton);
-        maturityButton.setText(maturityLanguages[languageSelected]);
+        maturityButton.setText(MainActivity.maturityLanguages[MainActivity.languageSelected]);
 
         Button temperatureButton = (Button) findViewById(R.id.temperatureButton);
-        temperatureButton.setText(temperatureLanguages[languageSelected]);
+        /*temperatureButton.setText(MainActivity.temperatureLanguages[MainActivity.languageSelected]);*/
 
         Button disorderButton = (Button) findViewById(R.id.disorderButton);
-        disorderButton.setText(disorderLanguages[languageSelected]);
+        if (commoditySelected instanceof Ornamental) {
+            temperatureButton.setVisibility(View.GONE);
+            disorderButton.setVisibility(View.GONE);
+        }
+        else {
+            temperatureButton.setVisibility(View.VISIBLE);
+            temperatureButton.setText(MainActivity.temperatureLanguages[MainActivity.languageSelected]);
+
+            disorderButton.setVisibility(View.VISIBLE);
+            disorderButton.setText(MainActivity.disorderLanguages[MainActivity.languageSelected]);
+        }
     }
 
-    protected void categorySelected(View view){
-        Button button = (Button) view;
-        String selected = (String) button.getText();
 
-
-        if (selected == maturityLanguages[languageSelected]){
-
+    public void maturityClicked(View view){
+        String information = "";
+        if (commoditySelected instanceof Fruit){
+            Fruit fruit = (Fruit) commoditySelected;
+            information = fruit.maturity;
         }
-        else if(selected == temperatureLanguages[languageSelected]) {
-
+        else if (commoditySelected instanceof Vegetable) {
+            Vegetable vegetable = (Vegetable) commoditySelected;
+            information = vegetable.maturity;
         }
-        else if(selected == disorderLanguages[languageSelected]){
-
+        else if (commoditySelected instanceof Ornamental) {
+            Ornamental ornamental = (Ornamental) commoditySelected;
+            information = ornamental.maturity;
         }
+        Intent intent = new Intent(this, InformationActivity.class);
+        InformationActivity.information = information;
+        startActivity(intent);
+    }
 
-        //Intent intent = new Intent(this, ListProduceActivity.class);
-        //intent.putExtra(EXTRA_MESSAGE, produceType);
-        //startActivity(intent);
+    public void temperatureClicked(View view){
+        String information = "";
+        if (commoditySelected instanceof Fruit){
+            Fruit fruit = (Fruit) commoditySelected;
+            information = fruit.temperature;
+        }
+        else if (commoditySelected instanceof Vegetable) {
+            Vegetable vegetable = (Vegetable) commoditySelected;
+            information = vegetable.temperature;
+        }
+        /*else if (commoditySelected instanceof Ornamental) {
+            Ornamental ornamental = (Ornamental) commoditySelected;
+            information = ornamental.maturity;
+        }*/
+
+        Intent intent = new Intent(this, InformationActivity.class);
+        InformationActivity.information = information;
+        startActivity(intent);
+    }
+
+    public void disordersClicked(View view) {
+        String information = "";
+        if (commoditySelected instanceof Fruit){
+            Fruit fruit = (Fruit) commoditySelected;
+            information = fruit.disorders;
+        }
+        else if (commoditySelected instanceof Vegetable) {
+            Vegetable vegetable = (Vegetable) commoditySelected;
+            information = vegetable.disorders;
+        }
+        /*else if (commoditySelected instanceof Ornamental) {
+            Ornamental ornamental = (Ornamental) commoditySelected;
+            information = ornamental.maturity;
+        }*/
+
+        Intent intent = new Intent(this, InformationActivity.class);
+        InformationActivity.information = information;
+        startActivity(intent);
     }
 }

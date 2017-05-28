@@ -1,11 +1,20 @@
 package postharvest.ucdavis.edu.producefacts;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.List;
+
+import static android.R.color;
 
 /**
  * Created by pryu on 5/12/2017.
@@ -13,13 +22,20 @@ import android.widget.ImageView;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
+    private String contextType;
+    //private final List<Commodity> commodities;
+    //private final List<CommodityImage> commodityImages;
 
-    public ImageAdapter(Context c) {
-        mContext = c;
+    private final List images;
+
+    public ImageAdapter(Context c, String ct, List commodities) {
+        this.mContext = c;
+        this.contextType = ct;
+        this.images = commodities;
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return images.size();
     }
 
     public Object getItem(int position) {
@@ -32,24 +48,76 @@ public class ImageAdapter extends BaseAdapter {
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
-        if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-        } else {
-            imageView = (ImageView) convertView;
+
+        if(convertView == null){
+            final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+            convertView = layoutInflater.inflate(R.layout.layout_commodity_item, null);
         }
 
-        imageView.setImageResource(mThumbIds[position]);
-        return imageView;
+        final ImageView imageView = (ImageView) convertView.findViewById(R.id.commodity_image);
+        final TextView nameTextView = (TextView) convertView.findViewById(R.id.commodity_name);
+        System.out.println("comparing context...");
+
+        if (contextType == "ListProduceActivity"){
+            System.out.println("context is ListProductActivity");
+            final Commodity commodity = (Commodity) images.get(position);
+
+            imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(commodity.image, "drawable", mContext.getPackageName()), 150, 150 ));
+            imageView.setMaxHeight(150);
+            imageView.setBackgroundColor(mContext.getResources().getColor(color.white));
+            nameTextView.setText(commodity.name);
+            nameTextView.setBackgroundColor(mContext.getResources().getColor(color.white));
+        }
+        else if (contextType == "InformationActivity"){
+            System.out.println("context is InformationActivity");
+            final CommodityImage comImage = (CommodityImage)images.get(position);
+
+            imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(comImage.image_name, "drawable", mContext.getPackageName()), 20, 20 ));
+            imageView.setMaxHeight(20);
+            imageView.setBackgroundColor(mContext.getResources().getColor(color.holo_blue_dark));
+        }
+
+        System.out.println("finsihed comparing");
+        return convertView;
     }
 
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.menu_fruits
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
 
-    };
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
 }

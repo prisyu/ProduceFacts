@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">ProduceFacts</string>
+    <string name="app_name">Produce Facts</string>
+    <string name ="nav_name">UC Davis Postharvest Technology</string>
+    <string name="fruitFile">fruit_</string>
+    <string name="vegetableFile">vegetable_</string>
+    <string name="ornamentalFile">ornamental_</string>
+    <string name="photoFile">photos_</string>
 </resources>
