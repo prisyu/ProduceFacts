@@ -26,6 +26,7 @@ public class InformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(label);
         setContentView(R.layout.activity_information);
 
         System.out.println("Information Activity...");

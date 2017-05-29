@@ -1,20 +1,30 @@
 package postharvest.ucdavis.edu.producefacts;
 
-import android.app.PendingIntent;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
-import java.io.File;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.SearchView;
+
+
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -22,12 +32,11 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 public class MainActivity extends AppCompatActivity {
 
     public static List<Commodity> commodityArray;
-    public static List<Commodity> commodityArrayForSearchResult;
     public static List< Fruit > fruitArray;
     public static List< Vegetable > vegetableArray;
     public static List< Ornamental > ornamentalArray;
 
-    public String searchString;
+    //public String searchString;
 
     public static final String menuItemLanguages[][] = {{"Fruit", "Vegetables", "Ornamentals"}, {"Frutas", "Vegetales", "Ornamentales"}, {"Fruit", "Les Légume", "Ornamentals"}};
     //menu item is ONLY for set title.  The arrays below are for the actual parsing
@@ -37,15 +46,113 @@ public class MainActivity extends AppCompatActivity {
     public static final String disorderLanguages[] = {"Disorders", "Desordenes", "Disorders"};
 
     public static final String languages[] = {"English", "Spanish", "French"};
-    public static final int languageSelected = Language.English;
-    public static final int produceSelected = 0;
+    public static int languageSelected = Language.English;
+    private AlertDialog languageDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // set up search
+        SearchView searchView = (SearchView) findViewById(R.id.search_main);
+        searchView.setQueryHint("search here");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!query.isEmpty()) {
+                    System.out.println("Searching for " + query);
+                    searchCommodities(query);
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        // load files
         loadFiles();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_language) {
+            if (languageDialog == null) {
+                // Set up language popup
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogLayout = inflater.inflate(R.layout.layout_language_select,
+                        null);
+
+                languageDialog = builder.create();
+                languageDialog.getWindow().setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                languageDialog.setView(dialogLayout, 0, 0, 0, 0);
+                languageDialog.setCanceledOnTouchOutside(true);
+                languageDialog.setCancelable(true);
+                WindowManager.LayoutParams wlmp = languageDialog.getWindow()
+                        .getAttributes();
+                wlmp.gravity = Gravity.BOTTOM;
+                builder.setView(dialogLayout);
+            }
+
+            languageDialog.show();
+            return true;
+        }
+        return false;
+    }
+
+    public void languageSelected(View view) {
+        Button button = (Button) view;
+        String newLanguage = button.getText().toString();
+        System.out.println("Selected " + newLanguage);
+
+        languageDialog.hide();
+
+        if (!newLanguage.equals(languages[languageSelected])) {
+            if (newLanguage.equals(languages[Language.English])){
+                System.out.println("changing to english...");
+                languageSelected = Language.English;
+            }
+            else if (newLanguage.equals(languages[Language.Spanish])){
+                System.out.println("changing to Spanish...");
+                languageSelected = Language.Spanish;
+            }
+            else if (newLanguage.equals(languages[Language.French])){
+                System.out.println("changing to French...");
+                languageSelected = Language.French;
+            }
+            else {
+                System.out.println("cannot choose new language");
+            }
+
+            //loadFiles();
+
+            /*final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+            progressDialog.setCancelable(false);
+            new Thread(new Runnable() {
+                public void run(){
+                    loadFiles();
+                    progressDialog.dismiss();
+                }
+            }).start();
+            */
+
+        }
 
     }
 
@@ -65,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
             ListProduceActivity.commodities = new ArrayList<Commodity>(ornamentalArray);
         }
         startActivity(intent);
-
     }
 
     public void loadFiles(){
@@ -76,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("updating language labels...");
         // update the button labels
+        System.out.println("languageSelected = " + languageSelected);
         switch (languageSelected) {
             case Language.English:
                 fruitButton.setText(menuItemLanguages[languageSelected][0]);
@@ -93,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 ornamentalButton.setText(menuItemLanguages[languageSelected][2]);
                 break;
             default:
+                System.out.println("using default in switch");
                 fruitButton.setText(menuItemLanguages[0][0]);
                 vegetableButton.setText(menuItemLanguages[0][1]);
                 ornamentalButton.setText(menuItemLanguages[0][2]);
@@ -172,5 +280,18 @@ public class MainActivity extends AppCompatActivity {
         commodityArray.addAll(vegetableArray);
         commodityArray.addAll(ornamentalArray);
 
+    }
+
+    protected void searchCommodities(String searchString) {
+        List<Commodity> commodityArrayForSearchResult = new ArrayList<Commodity>();
+        for (Commodity commodity : commodityArray) {
+            if (commodity.name.toLowerCase().contains(searchString.toLowerCase())) {
+                commodityArrayForSearchResult.add(commodity);
+            }
+        }
+
+        Intent intent = new Intent(this, ListProduceActivity.class);
+        ListProduceActivity.commodities = commodityArrayForSearchResult;
+        startActivity(intent);
     }
 }

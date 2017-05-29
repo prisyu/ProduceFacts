@@ -15,8 +15,11 @@
         tools:layout_editor_absoluteY="8dp">
 
         <SearchView
+            android:id="@+id/search_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" >
+
+        </SearchView>
 
         <RelativeLayout
             android:layout_width="match_parent"

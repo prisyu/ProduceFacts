@@ -20,6 +20,7 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(commoditySelected.name);
         setContentView(R.layout.activity_category);
 
         Button maturityButton = (Button) findViewById(R.id.maturityButton);
@@ -66,7 +67,7 @@ public class CategoryActivity extends AppCompatActivity {
             information = ornamental.maturity;
         }
         Intent intent = new Intent(this, InformationActivity.class);
-        InformationActivity.label = view.toString();
+        InformationActivity.label = MainActivity.maturityLanguages[MainActivity.languageSelected];
         InformationActivity.information = information;
         startActivity(intent);
     }
@@ -87,7 +88,7 @@ public class CategoryActivity extends AppCompatActivity {
         }*/
 
         Intent intent = new Intent(this, InformationActivity.class);
-        InformationActivity.label = view.toString();
+        InformationActivity.label = MainActivity.temperatureLanguages[MainActivity.languageSelected];
         InformationActivity.information = information;
         startActivity(intent);
     }
@@ -108,7 +109,7 @@ public class CategoryActivity extends AppCompatActivity {
         }*/
 
         Intent intent = new Intent(this, InformationActivity.class);
-        InformationActivity.label = view.toString();
+        InformationActivity.label = MainActivity.disorderLanguages[MainActivity.languageSelected];
         InformationActivity.information = information;
         startActivity(intent);
     }

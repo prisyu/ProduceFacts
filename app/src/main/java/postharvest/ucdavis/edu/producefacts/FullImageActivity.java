@@ -17,6 +17,7 @@ public class FullImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(InformationActivity.label);
         setContentView(R.layout.activity_full_image);
 
         System.out.println("displaying image = " + imageName);

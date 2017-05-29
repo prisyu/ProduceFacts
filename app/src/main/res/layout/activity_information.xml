@@ -9,7 +9,7 @@
         android:id="@+id/info_web"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.25">
+        android:layout_weight="0.5">
 
     </WebView>
 
@@ -17,7 +17,7 @@
         android:id="@+id/info_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.25"
+        android:layout_weight="1.5"
         android:background="@android:color/holo_blue_dark"
         android:gravity="fill_horizontal"
 

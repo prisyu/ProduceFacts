@@ -1,6 +1,7 @@
 package postharvest.ucdavis.edu.producefacts;
 
 import android.app.ActionBar;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ public class ListProduceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_produce);
 
+
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this, "ListProduceActivity", commodities));
         gridview.setNumColumns(2);
@@ -38,6 +41,27 @@ public class ListProduceActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // set up search
+        SearchView searchView = (SearchView) findViewById(R.id.search_commodity);
+        searchView.setQueryHint("search here");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!query.isEmpty()) {
+                    System.out.println("Searching for " + query);
+                    searchCommodities(query);
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -49,4 +73,16 @@ public class ListProduceActivity extends AppCompatActivity {
         return false;
     }
 
+    protected void searchCommodities(String searchString) {
+        List<Commodity> commodityArrayForSearchResult = new ArrayList<Commodity>();
+        for (Commodity commodity : commodities) {
+            if (commodity.name.toLowerCase().contains(searchString.toLowerCase())) {
+                commodityArrayForSearchResult.add(commodity);
+            }
+        }
+
+        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(new ImageAdapter(this, "ListProduceActivity", commodityArrayForSearchResult));
+        gridview.setNumColumns(2);
+    }
 }
