@@ -22,10 +22,41 @@
         </activity>
 
         <activity android:name=".MainActivity" />
-        <activity android:name=".ListProduceActivity"/>
-        <activity android:name=".CategoryActivity"/>
-        <activity android:name=".InformationActivity"/>
-        <activity android:name=".FullImageActivity"/>
+        <activity
+            android:name=".ListProduceActivity"
+            android:label=""
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.MainActivity"
+                android:value=".MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".CategoryActivity"
+            android:label=""
+            android:parentActivityName=".ListProduceActivity">
+            <meta-data
+                android:name="android.support.ListProduceActivity"
+                android:value=".ListProduceActivity" />
+        </activity>
+
+        <activity
+            android:name=".InformationActivity"
+            android:label=""
+            android:parentActivityName=".CategoryActivity">
+            <meta-data
+                android:name="android.support.CategoryActivity"
+                android:value=".CategoryActivity" />
+        </activity>
+
+        <activity
+            android:name=".FullImageActivity"
+            android:label=""
+            android:parentActivityName=".InformationActivity">
+            <meta-data
+                android:name="android.support.InformationActivity"
+                android:value=".InformationActivity" />
+        </activity>
 
 
     </application>

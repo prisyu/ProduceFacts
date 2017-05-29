@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 
 public class InformationActivity extends AppCompatActivity {
+    public static String label;
     public static String information;
     private List<CommodityImage> image_arr;
 
@@ -51,6 +53,15 @@ public class InformationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 
     protected void parseInformation(){

@@ -3,6 +3,7 @@ package postharvest.ucdavis.edu.producefacts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -41,6 +42,14 @@ public class CategoryActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
+    }
 
     public void maturityClicked(View view){
         String information = "";
@@ -57,6 +66,7 @@ public class CategoryActivity extends AppCompatActivity {
             information = ornamental.maturity;
         }
         Intent intent = new Intent(this, InformationActivity.class);
+        InformationActivity.label = view.toString();
         InformationActivity.information = information;
         startActivity(intent);
     }
@@ -77,6 +87,7 @@ public class CategoryActivity extends AppCompatActivity {
         }*/
 
         Intent intent = new Intent(this, InformationActivity.class);
+        InformationActivity.label = view.toString();
         InformationActivity.information = information;
         startActivity(intent);
     }
@@ -97,6 +108,7 @@ public class CategoryActivity extends AppCompatActivity {
         }*/
 
         Intent intent = new Intent(this, InformationActivity.class);
+        InformationActivity.label = view.toString();
         InformationActivity.information = information;
         startActivity(intent);
     }

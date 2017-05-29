@@ -1,13 +1,11 @@
 package postharvest.ucdavis.edu.producefacts;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.github.chrisbanes.photoview.PhotoView;
 
 /**
  * Created by pryu on 5/27/2017.
@@ -19,14 +17,20 @@ public class FullImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_commodity_item);
+        setContentView(R.layout.activity_full_image);
 
-        final ImageView imageView = (ImageView) findViewById(R.id.commodity_image);
-        final TextView textView = (TextView) findViewById(R.id.commodity_name);
-
-        textView.setText("");
-        //imageView.setImageBitmap(ImageAdapter.decodeSampledBitmapFromResource(getResources(), getResources().getIdentifier(imageName, "drawable", getPackageName()), 150, 150 ));
+        System.out.println("displaying image = " + imageName);
+        final PhotoView imageView = (PhotoView) findViewById(R.id.full_image);
         imageView.setImageResource(getResources().getIdentifier(imageName, "drawable", getPackageName()));
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 }

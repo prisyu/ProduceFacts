@@ -1,7 +1,10 @@
 package postharvest.ucdavis.edu.producefacts;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         loadFiles();
+
     }
 
     public void produceSelected(View view){
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             ListProduceActivity.commodities = new ArrayList<Commodity>(ornamentalArray);
         }
         startActivity(intent);
+
     }
 
     public void loadFiles(){

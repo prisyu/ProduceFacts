@@ -1,8 +1,11 @@
 package postharvest.ucdavis.edu.producefacts;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -14,7 +17,7 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class ListProduceActivity extends AppCompatActivity {
 
-    public static List<Commodity> commodities = new ArrayList<Commodity>(MainActivity.fruitArray);
+    public static List<Commodity> commodities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,4 +39,14 @@ public class ListProduceActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
+    }
+
 }

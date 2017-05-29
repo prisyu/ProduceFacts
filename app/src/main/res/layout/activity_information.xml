@@ -9,18 +9,22 @@
         android:id="@+id/info_web"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.25"/>
+        android:layout_weight="0.25">
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    </WebView>
+
+    <GridView
         android:id="@+id/info_grid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.75"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
         android:background="@android:color/holo_blue_dark"
         android:gravity="fill_horizontal"
-        android:horizontalSpacing="10dp"
 
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" />
-        <!--android:numColumns="auto_fit"-->
+        android:horizontalSpacing="10dp"
+        android:minHeight="150dp"
+        android:scrollbars="horizontal"
+        android:stretchMode="columnWidth" />
+
+    <!--android:numColumns="auto_fit"-->
 </LinearLayout>

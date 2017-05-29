@@ -56,10 +56,8 @@ public class ImageAdapter extends BaseAdapter {
 
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.commodity_image);
         final TextView nameTextView = (TextView) convertView.findViewById(R.id.commodity_name);
-        System.out.println("comparing context...");
 
         if (contextType == "ListProduceActivity"){
-            System.out.println("context is ListProductActivity");
             final Commodity commodity = (Commodity) images.get(position);
 
             imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(commodity.image, "drawable", mContext.getPackageName()), 150, 150 ));
@@ -69,15 +67,13 @@ public class ImageAdapter extends BaseAdapter {
             nameTextView.setBackgroundColor(mContext.getResources().getColor(color.white));
         }
         else if (contextType == "InformationActivity"){
-            System.out.println("context is InformationActivity");
             final CommodityImage comImage = (CommodityImage)images.get(position);
 
-            imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(comImage.image_name, "drawable", mContext.getPackageName()), 20, 20 ));
-            imageView.setMaxHeight(20);
+            imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(comImage.image_name, "drawable", mContext.getPackageName()), 100, 100 ));
+            imageView.setMaxHeight(100);
             imageView.setBackgroundColor(mContext.getResources().getColor(color.holo_blue_dark));
         }
 
-        System.out.println("finsihed comparing");
         return convertView;
     }
 
