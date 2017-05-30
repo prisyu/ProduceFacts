@@ -72,6 +72,7 @@ public class ImageAdapter extends BaseAdapter {
             imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(comImage.image_name, "drawable", mContext.getPackageName()), 100, 100 ));
             imageView.setMaxHeight(100);
             imageView.setBackgroundColor(mContext.getResources().getColor(color.holo_blue_dark));
+            nameTextView.setText("");
         }
 
         return convertView;

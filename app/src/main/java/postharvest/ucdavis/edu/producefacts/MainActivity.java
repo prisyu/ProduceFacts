@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("cannot choose new language");
             }
 
-            //loadFiles();
+            loadFiles();
 
             /*final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

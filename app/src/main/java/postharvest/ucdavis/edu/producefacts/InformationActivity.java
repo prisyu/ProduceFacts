@@ -41,7 +41,9 @@ public class InformationActivity extends AppCompatActivity {
 
         GridView gridview = (GridView) findViewById(R.id.info_grid);
         gridview.setAdapter(new ImageAdapter(this, "InformationActivity", image_arr));
-        gridview.setNumColumns(gridview.getAdapter().getCount());
+        //gridview.setNumColumns(gridview.getAdapter().getCount());
+        gridview.setNumColumns(image_arr.size());
+        gridview.setStretchMode(GridView.STRETCH_SPACING);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
