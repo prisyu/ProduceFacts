@@ -9,7 +9,7 @@
 
     </style>
 
-    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance">
+    <style name="AppTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance">
         <item name="android:textSize">12sp</item>
 
     </style>

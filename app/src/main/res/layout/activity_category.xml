@@ -19,21 +19,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:onClick="maturityClicked" />
+            android:onClick="maturityClicked"
+            android:padding="10dp"
+            android:background="@android:color/holo_blue_dark"/>
 
         <Button
             android:id="@+id/temperatureButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:onClick="temperatureClicked" />
+            android:onClick="temperatureClicked"
+            android:background="@android:color/holo_blue_dark"/>
 
         <Button
             android:id="@+id/disorderButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:onClick="disordersClicked" />
+            android:onClick="disordersClicked"
+            android:background="@android:color/holo_blue_dark"/>
 
     </LinearLayout>
 </RelativeLayout>

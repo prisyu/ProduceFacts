@@ -9,6 +9,9 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,11 +42,10 @@ public class InformationActivity extends AppCompatActivity {
         WebView infoWebView = (WebView) findViewById(R.id.info_web);
         infoWebView.loadData(information, "text/html", null);
 
-        GridView gridview = (GridView) findViewById(R.id.info_grid);
+        /*GridView gridview = (GridView) findViewById(R.id.info_grid);
         gridview.setAdapter(new ImageAdapter(this, "InformationActivity", image_arr));
         //gridview.setNumColumns(gridview.getAdapter().getCount());
         gridview.setNumColumns(image_arr.size());
-        gridview.setStretchMode(GridView.STRETCH_SPACING);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -55,7 +57,32 @@ public class InformationActivity extends AppCompatActivity {
                 FullImageActivity.imageName = image_arr.get(position).image_name;
                 startActivity(intent);
             }
-        });
+        });*/
+
+        if (image_arr.isEmpty()) {
+            HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.info_horizontal);
+            hsv.setVisibility(View.GONE);
+        }
+        else {
+            LinearLayout gallery = (LinearLayout) findViewById(R.id.gallery);
+            for (final CommodityImage comImage : image_arr) {
+                ImageView imageView = new ImageView(this);
+                imageView.setImageBitmap(ImageAdapter.decodeSampledBitmapFromResource(getResources(), getResources().getIdentifier(comImage.image_name, "drawable", getPackageName()), 100, 100));
+                imageView.setPadding(5, 5, 5, 5);
+
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        System.out.println("Commodity Image clicked = ");
+                        System.out.println(comImage.image_name);
+
+                        Intent intent = new Intent(InformationActivity.this, FullImageActivity.class);
+                        FullImageActivity.imageName = comImage.image_name;
+                        startActivity(intent);
+                    }
+                });
+                gallery.addView(imageView);
+            }
+        }
     }
 
     @Override

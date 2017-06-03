@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        updateButtons();
+
         // set up search
         SearchView searchView = (SearchView) findViewById(R.id.search_main);
         searchView.setQueryHint("search here");
@@ -138,7 +140,31 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("cannot choose new language");
             }
 
+
+            final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+            languageDialog.dismiss();
             loadFiles();
+            updateButtons();
+            progressBar.setVisibility(View.INVISIBLE);
+
+
+
+            /*System.out.println("Will run loadFiles() thread...");
+            new Thread(new Runnable() {
+                public void run(){
+                    loadFiles();
+
+                    Handler handler = new Handler();
+                    // Update the progress bar
+                    handler.post(new Runnable() {
+                        public void run() {
+                            progressBar.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }).start();*/
+
 
             /*final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -154,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void languageCancel(View view) {
+        languageDialog.dismiss();
     }
 
     public void produceSelected(View view){
@@ -174,8 +204,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void loadFiles(){
-        System.out.println("loading csv files...");
+    public void updateButtons(){
         Button fruitButton = (Button) findViewById(R.id.fruitButton);
         Button vegetableButton = (Button) findViewById(R.id.vegetableButton);
         Button ornamentalButton = (Button) findViewById(R.id.ornamentalButton);
@@ -206,6 +235,40 @@ public class MainActivity extends AppCompatActivity {
                 ornamentalButton.setText(menuItemLanguages[0][2]);
                 break;
         }
+    }
+
+    public void loadFiles(){
+        System.out.println("loading csv files...");
+        /*Button fruitButton = (Button) findViewById(R.id.fruitButton);
+        Button vegetableButton = (Button) findViewById(R.id.vegetableButton);
+        Button ornamentalButton = (Button) findViewById(R.id.ornamentalButton);
+
+        System.out.println("updating language labels...");
+        // update the button labels
+        System.out.println("languageSelected = " + languageSelected);
+        switch (languageSelected) {
+            case Language.English:
+                fruitButton.setText(menuItemLanguages[languageSelected][0]);
+                vegetableButton.setText(menuItemLanguages[languageSelected][1]);
+                ornamentalButton.setText(menuItemLanguages[languageSelected][2]);
+                break;
+            case Language.Spanish:
+                fruitButton.setText(menuItemLanguages[languageSelected][0]);
+                vegetableButton.setText(menuItemLanguages[languageSelected][1]);
+                ornamentalButton.setText(menuItemLanguages[languageSelected][2]);
+                break;
+            case Language.French:
+                fruitButton.setText(menuItemLanguages[languageSelected][0]);
+                vegetableButton.setText(menuItemLanguages[languageSelected][1]);
+                ornamentalButton.setText(menuItemLanguages[languageSelected][2]);
+                break;
+            default:
+                System.out.println("using default in switch");
+                fruitButton.setText(menuItemLanguages[0][0]);
+                vegetableButton.setText(menuItemLanguages[0][1]);
+                ornamentalButton.setText(menuItemLanguages[0][2]);
+                break;
+        }*/
 
         // actual csv parsing
         System.out.println("parsing fruit files...");

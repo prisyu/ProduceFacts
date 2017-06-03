@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#80FFFFFF"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#80FFFFFF"
+        android:background="#FFFFFF"
         android:padding="10dp"
         android:text="Languages Menu"
         android:textAlignment="center"
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#80FFFFFF"
+        android:background="#FFFFFF"
         android:paddingBottom="20dp"
         android:text="PLease Select a Language"
         android:textAlignment="center"
@@ -28,7 +28,7 @@
         android:id="@+id/button_language_english"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#80FFFFFF"
+        android:background="#FFFFFF"
         android:onClick="languageSelected"
         android:padding="20dp"
         android:text="English"
@@ -38,7 +38,7 @@
         android:id="@+id/button_language_spanish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#80FFFFFF"
+        android:background="#FFFFFF"
         android:onClick="languageSelected"
         android:padding="20dp"
         android:text="Spanish"
@@ -48,9 +48,24 @@
         android:id="@+id/button_language_french"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#80FFFFFF"
+        android:background="#FFFFFF"
         android:onClick="languageSelected"
         android:padding="20dp"
         android:text="French"
         android:textSize="20sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <Button
+        android:id="@+id/button_language_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:onClick="languageCancel"
+        android:padding="20dp"
+        android:text="Cancel"
+        android:textSize="20sp" />
+
 </LinearLayout>
