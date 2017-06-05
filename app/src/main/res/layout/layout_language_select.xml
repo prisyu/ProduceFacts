@@ -29,9 +29,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
+        android:fontFamily="sans-serif"
         android:onClick="languageSelected"
         android:padding="20dp"
         android:text="English"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp" />
 
     <Button
@@ -42,6 +44,7 @@
         android:onClick="languageSelected"
         android:padding="20dp"
         android:text="Spanish"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp" />
 
     <Button
@@ -52,11 +55,26 @@
         android:onClick="languageSelected"
         android:padding="20dp"
         android:text="French"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp" />
 
-    <Space
+    <!--<Space
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp" />-->
+<!--    <RelativeLayout
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+             />
+    </RelativeLayout>-->
 
     <Button
         android:id="@+id/button_language_cancel"
@@ -66,6 +84,7 @@
         android:onClick="languageCancel"
         android:padding="20dp"
         android:text="Cancel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp" />
 
 </LinearLayout>

@@ -1,13 +1,16 @@
 package postharvest.ucdavis.edu.producefacts;
 
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,8 +20,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
-
+import android.widget.TextView;
 
 
 import java.io.InputStream;
@@ -54,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //loadProgressScreen();
+        //progressScreen.dismiss();
+
         updateButtons();
 
         // set up search
@@ -79,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         // load files
         loadFiles();
+
     }
 
     @Override
@@ -121,9 +129,14 @@ public class MainActivity extends AppCompatActivity {
         String newLanguage = button.getText().toString();
         System.out.println("Selected " + newLanguage);
 
-        languageDialog.hide();
-
         if (!newLanguage.equals(languages[languageSelected])) {
+
+            AlertDialog progressScreen = loadProgressScreen();
+            System.out.println("showing progress");
+            progressScreen.show();
+            System.out.println("showed progress");
+            languageDialog.dismiss();
+
             if (newLanguage.equals(languages[Language.English])){
                 System.out.println("changing to english...");
                 languageSelected = Language.English;
@@ -140,50 +153,39 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("cannot choose new language");
             }
 
-
-            final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-            progressBar.setVisibility(View.VISIBLE);
-            languageDialog.dismiss();
             loadFiles();
             updateButtons();
-            progressBar.setVisibility(View.INVISIBLE);
-
-
-
-            /*System.out.println("Will run loadFiles() thread...");
-            new Thread(new Runnable() {
-                public void run(){
-                    loadFiles();
-
-                    Handler handler = new Handler();
-                    // Update the progress bar
-                    handler.post(new Runnable() {
-                        public void run() {
-                            progressBar.setVisibility(View.VISIBLE);
-                        }
-                    });
-                }
-            }).start();*/
-
-
-            /*final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.show();
-            progressDialog.setCancelable(false);
-            new Thread(new Runnable() {
-                public void run(){
-                    loadFiles();
-                    progressDialog.dismiss();
-                }
-            }).start();
-            */
-
+            System.out.println("dismissing progress");
+            progressScreen.dismiss();
+            System.out.println("dismissed progress");
+            languageDialog.dismiss();
         }
 
     }
 
     public void languageCancel(View view) {
         languageDialog.dismiss();
+    }
+
+    protected AlertDialog loadProgressScreen() {
+        AlertDialog progressScreen;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.layout_progress,
+                null);
+
+        progressScreen = builder.create();
+        progressScreen.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        progressScreen.setView(dialogLayout, 0, 0, 0, 0);
+        progressScreen.setCanceledOnTouchOutside(false);
+        progressScreen.setCancelable(false);
+        WindowManager.LayoutParams wlmp = progressScreen.getWindow()
+                .getAttributes();
+        wlmp.gravity = Gravity.CENTER;
+        builder.setView(dialogLayout);
+        progressScreen.show();
+        return progressScreen;
     }
 
     public void produceSelected(View view){

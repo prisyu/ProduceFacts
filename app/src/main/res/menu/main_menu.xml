@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="top|start"
+    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
     >
 
     <item
         android:id="@+id/menu_language"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:title="Language"
         app:showAsAction="always|withText" />
 </menu>
