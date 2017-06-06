@@ -17,7 +17,11 @@
         <SearchView
             android:id="@+id/search_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            android:gravity="fill_vertical"
+            android:longClickable="true"
+            app:queryHint="search here">
 
         </SearchView>
 

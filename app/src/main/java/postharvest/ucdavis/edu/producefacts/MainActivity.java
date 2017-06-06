@@ -1,28 +1,18 @@
 package postharvest.ucdavis.edu.producefacts;
 
-
-import android.app.ActionBar;
-import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.TextView;
+
 
 
 import java.io.InputStream;
@@ -40,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
     public static List< Vegetable > vegetableArray;
     public static List< Ornamental > ornamentalArray;
 
-    //public String searchString;
-
     public static final String menuItemLanguages[][] = {{"Fruit", "Vegetables", "Ornamentals"}, {"Frutas", "Vegetales", "Ornamentales"}, {"Fruit", "Les Légume", "Ornamentals"}};
     //menu item is ONLY for set title.  The arrays below are for the actual parsing
     public static final String recommendationLanguages[] = {"Recommendations for Maintaining Postharvest Quality", "Recomendaciones para Mantener la Calidad Postcosecha", "Recommendations for Maintaining Postharvest Quality"};
@@ -53,13 +41,11 @@ public class MainActivity extends AppCompatActivity {
     public static int languageSelected = Language.English;
     private AlertDialog languageDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //loadProgressScreen();
-        //progressScreen.dismiss();
 
         updateButtons();
 
@@ -100,92 +86,55 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_language) {
             if (languageDialog == null) {
-                // Set up language popup
+                // Set up language dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                LayoutInflater inflater = getLayoutInflater();
-                View dialogLayout = inflater.inflate(R.layout.layout_language_select,
-                        null);
+                builder.setTitle("Please Select a Language")
+                        .setSingleChoiceItems(languages, languageSelected, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+
+                                if (which != languageSelected) {
+                                    //loadProgressScreen();
+                                    switch (which) {
+                                        case Language.English:
+                                            System.out.println("changing to english...");
+                                            languageSelected = Language.English;
+                                            break;
+                                        case Language.Spanish:
+                                            System.out.println("changing to Spanish...");
+                                            languageSelected = Language.Spanish;
+                                            break;
+                                        case Language.French:
+                                            System.out.println("changing to French...");
+                                            languageSelected = Language.French;
+                                            break;
+                                        default:
+                                            System.out.println("cannot choose new language");
+                                    }
+
+                                    loadFiles();
+                                    updateButtons();
+                                    dialog.dismiss();
+                                }
+                            }
+                        });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
 
                 languageDialog = builder.create();
-                languageDialog.getWindow().setSoftInputMode(
-                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                languageDialog.setView(dialogLayout, 0, 0, 0, 0);
-                languageDialog.setCanceledOnTouchOutside(true);
-                languageDialog.setCancelable(true);
-                WindowManager.LayoutParams wlmp = languageDialog.getWindow()
-                        .getAttributes();
-                wlmp.gravity = Gravity.BOTTOM;
-                builder.setView(dialogLayout);
+
             }
 
             languageDialog.show();
             return true;
         }
         return false;
-    }
-
-    public void languageSelected(View view) {
-        Button button = (Button) view;
-        String newLanguage = button.getText().toString();
-        System.out.println("Selected " + newLanguage);
-
-        if (!newLanguage.equals(languages[languageSelected])) {
-
-            AlertDialog progressScreen = loadProgressScreen();
-            System.out.println("showing progress");
-            progressScreen.show();
-            System.out.println("showed progress");
-            languageDialog.dismiss();
-
-            if (newLanguage.equals(languages[Language.English])){
-                System.out.println("changing to english...");
-                languageSelected = Language.English;
-            }
-            else if (newLanguage.equals(languages[Language.Spanish])){
-                System.out.println("changing to Spanish...");
-                languageSelected = Language.Spanish;
-            }
-            else if (newLanguage.equals(languages[Language.French])){
-                System.out.println("changing to French...");
-                languageSelected = Language.French;
-            }
-            else {
-                System.out.println("cannot choose new language");
-            }
-
-            loadFiles();
-            updateButtons();
-            System.out.println("dismissing progress");
-            progressScreen.dismiss();
-            System.out.println("dismissed progress");
-            languageDialog.dismiss();
-        }
-
-    }
-
-    public void languageCancel(View view) {
-        languageDialog.dismiss();
-    }
-
-    protected AlertDialog loadProgressScreen() {
-        AlertDialog progressScreen;
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.layout_progress,
-                null);
-
-        progressScreen = builder.create();
-        progressScreen.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        progressScreen.setView(dialogLayout, 0, 0, 0, 0);
-        progressScreen.setCanceledOnTouchOutside(false);
-        progressScreen.setCancelable(false);
-        WindowManager.LayoutParams wlmp = progressScreen.getWindow()
-                .getAttributes();
-        wlmp.gravity = Gravity.CENTER;
-        builder.setView(dialogLayout);
-        progressScreen.show();
-        return progressScreen;
     }
 
     public void produceSelected(View view){
@@ -241,37 +190,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadFiles(){
         System.out.println("loading csv files...");
-        /*Button fruitButton = (Button) findViewById(R.id.fruitButton);
-        Button vegetableButton = (Button) findViewById(R.id.vegetableButton);
-        Button ornamentalButton = (Button) findViewById(R.id.ornamentalButton);
-
-        System.out.println("updating language labels...");
-        // update the button labels
-        System.out.println("languageSelected = " + languageSelected);
-        switch (languageSelected) {
-            case Language.English:
-                fruitButton.setText(menuItemLanguages[languageSelected][0]);
-                vegetableButton.setText(menuItemLanguages[languageSelected][1]);
-                ornamentalButton.setText(menuItemLanguages[languageSelected][2]);
-                break;
-            case Language.Spanish:
-                fruitButton.setText(menuItemLanguages[languageSelected][0]);
-                vegetableButton.setText(menuItemLanguages[languageSelected][1]);
-                ornamentalButton.setText(menuItemLanguages[languageSelected][2]);
-                break;
-            case Language.French:
-                fruitButton.setText(menuItemLanguages[languageSelected][0]);
-                vegetableButton.setText(menuItemLanguages[languageSelected][1]);
-                ornamentalButton.setText(menuItemLanguages[languageSelected][2]);
-                break;
-            default:
-                System.out.println("using default in switch");
-                fruitButton.setText(menuItemLanguages[0][0]);
-                vegetableButton.setText(menuItemLanguages[0][1]);
-                ornamentalButton.setText(menuItemLanguages[0][2]);
-                break;
-        }*/
-
         // actual csv parsing
         System.out.println("parsing fruit files...");
         try {
