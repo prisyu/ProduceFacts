@@ -6,13 +6,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
-
+import android.widget.TextView;
 
 
 import java.io.InputStream;
@@ -48,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         updateButtons();
+        TextView websiteLink = (TextView) findViewById(R.id.websiteLink);
+        websiteLink.setMovementMethod(LinkMovementMethod.getInstance());
+        websiteLink.setText(Html.fromHtml(getResources().getString(R.string.websiteLink)));
 
         // set up search
         SearchView searchView = (SearchView) findViewById(R.id.search_main);

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Produce Facts</string>
-    <string name ="nav_name">UC Davis Postharvest Technology</string>
+    <string name ="nav_name">UC Produce Facts</string>
+    <string name="websiteLink">&lt;a href="http://postharvest.ucdavis.edu">Produce Facats Website&lt;/a></string>
     <string name="fruitFile">fruit_</string>
     <string name="vegetableFile">vegetable_</string>
     <string name="ornamentalFile">ornamental_</string>
