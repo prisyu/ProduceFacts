@@ -1,0 +1,28 @@
+# Coding Conventions
+
+Class:
+public class className {
+}
+
+Functions: 
+void functionName() {
+}
+
+Variables: 
+variableType variableName;
+
+Conditional Statements: 
+if (condition) { 
+    // Do something
+}
+
+Make sure that every function has a comment on what it does an an example of how to use the function.
+Also comment on what each variable in the function parameters are. 
+// This
+// would
+// be
+// a
+// comment. 
+/* or this */
+void Function() {
+}
