@@ -14,7 +14,6 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
  */
 
 public class CategoryActivity extends AppCompatActivity {
-
     public static Commodity commoditySelected;
 
     @Override
@@ -27,8 +26,6 @@ public class CategoryActivity extends AppCompatActivity {
         maturityButton.setText(MainActivity.maturityLanguages[MainActivity.languageSelected]);
 
         Button temperatureButton = (Button) findViewById(R.id.temperatureButton);
-        /*temperatureButton.setText(MainActivity.temperatureLanguages[MainActivity.languageSelected]);*/
-
         Button disorderButton = (Button) findViewById(R.id.disorderButton);
         if (commoditySelected instanceof Ornamental) {
             temperatureButton.setVisibility(View.GONE);
@@ -52,9 +49,13 @@ public class CategoryActivity extends AppCompatActivity {
         return false;
     }
 
-    public void maturityClicked(View view){
+    /*
+        Onclick function to prepare next activity with maturity information.
+        Input: View of the maturity button.
+     */
+    public void maturityClicked(View view) {
         String information = "";
-        if (commoditySelected instanceof Fruit){
+        if (commoditySelected instanceof Fruit) {
             Fruit fruit = (Fruit) commoditySelected;
             information = fruit.maturity;
         }
@@ -72,9 +73,13 @@ public class CategoryActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void temperatureClicked(View view){
+    /*
+        Onclick function to prepare next activity with temperature information.
+        Input: View of the temperature button.
+     */
+    public void temperatureClicked(View view) {
         String information = "";
-        if (commoditySelected instanceof Fruit){
+        if (commoditySelected instanceof Fruit) {
             Fruit fruit = (Fruit) commoditySelected;
             information = fruit.temperature;
         }
@@ -82,10 +87,6 @@ public class CategoryActivity extends AppCompatActivity {
             Vegetable vegetable = (Vegetable) commoditySelected;
             information = vegetable.temperature;
         }
-        /*else if (commoditySelected instanceof Ornamental) {
-            Ornamental ornamental = (Ornamental) commoditySelected;
-            information = ornamental.maturity;
-        }*/
 
         Intent intent = new Intent(this, InformationActivity.class);
         InformationActivity.label = MainActivity.temperatureLanguages[MainActivity.languageSelected];
@@ -93,9 +94,13 @@ public class CategoryActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /*
+        Onclick function to prepare next activity with disorder information.
+        Input: View of the disorder button.
+     */
     public void disordersClicked(View view) {
         String information = "";
-        if (commoditySelected instanceof Fruit){
+        if (commoditySelected instanceof Fruit) {
             Fruit fruit = (Fruit) commoditySelected;
             information = fruit.disorders;
         }
@@ -103,10 +108,6 @@ public class CategoryActivity extends AppCompatActivity {
             Vegetable vegetable = (Vegetable) commoditySelected;
             information = vegetable.disorders;
         }
-        /*else if (commoditySelected instanceof Ornamental) {
-            Ornamental ornamental = (Ornamental) commoditySelected;
-            information = ornamental.maturity;
-        }*/
 
         Intent intent = new Intent(this, InformationActivity.class);
         InformationActivity.label = MainActivity.disorderLanguages[MainActivity.languageSelected];

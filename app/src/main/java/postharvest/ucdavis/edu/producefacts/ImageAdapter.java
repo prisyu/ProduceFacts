@@ -8,12 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
-
 import static android.R.color;
 
 /**
@@ -23,8 +20,6 @@ import static android.R.color;
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     private String contextType;
-    //private final List<Commodity> commodities;
-    //private final List<CommodityImage> commodityImages;
 
     private final List images;
 
@@ -46,10 +41,11 @@ public class ImageAdapter extends BaseAdapter {
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
+    /*
+        Create a new ImageView for each item referenced by the Adapter
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        if(convertView == null){
+        if (convertView == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             convertView = layoutInflater.inflate(R.layout.layout_commodity_item, null);
         }
@@ -57,16 +53,16 @@ public class ImageAdapter extends BaseAdapter {
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.commodity_image);
         final TextView nameTextView = (TextView) convertView.findViewById(R.id.commodity_name);
 
-        if (contextType == "ListProduceActivity"){
+        if (contextType == "ListProduceActivity") {
             final Commodity commodity = (Commodity) images.get(position);
 
             imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(commodity.image, "drawable", mContext.getPackageName()), 150, 150 ));
-            imageView.setMaxHeight(150);
+            imageView.setMaxHeight(125);
             imageView.setBackgroundColor(mContext.getResources().getColor(color.white));
             nameTextView.setText(commodity.name);
             nameTextView.setBackgroundColor(mContext.getResources().getColor(color.white));
         }
-        else if (contextType == "InformationActivity"){
+        else if (contextType == "InformationActivity") {
             final CommodityImage comImage = (CommodityImage)images.get(position);
 
             imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(comImage.image_name, "drawable", mContext.getPackageName()), 100, 100 ));
@@ -78,15 +74,16 @@ public class ImageAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    /*
+        Calculate the Sample Size.
+     */
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
 
         if (height > reqHeight || width > reqWidth) {
-
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
 
@@ -101,9 +98,10 @@ public class ImageAdapter extends BaseAdapter {
         return inSampleSize;
     }
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
-
+    /*
+        Decode the bitmap.
+     */
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -116,5 +114,4 @@ public class ImageAdapter extends BaseAdapter {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
-
 }

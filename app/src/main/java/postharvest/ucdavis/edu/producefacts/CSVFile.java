@@ -18,16 +18,18 @@ public class CSVFile {
     public int columnCount;
     public String[] headers;
     public Map<String, Integer> headerIndex;
-    public List< String [] > keyedRows;
+    public List<String[]> keyedRows;
 
-
-    public CSVFile(InputStream inputStream){
+    public CSVFile(InputStream inputStream) {
         this.inputStream = inputStream;
         keyedRows = read();
     }
 
-    public List<String []> read(){
-        List<String []> resultList;
+    /*
+        Read and parse the CSV file.
+     */
+    public List<String[]> read() {
+        List<String[]> resultList;
         try {
             CSVReader reader = new CSVReader(new InputStreamReader(inputStream));
             resultList = reader.readAll();
@@ -48,5 +50,4 @@ public class CSVFile {
 
         return resultList;
     }
-
 }

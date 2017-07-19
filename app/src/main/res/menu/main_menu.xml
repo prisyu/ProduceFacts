@@ -9,5 +9,5 @@
         android:id="@+id/menu_language"
         android:textAppearance="@android:style/TextAppearance.Small"
         android:title="Language"
-        app:showAsAction="always|withText" />
+        app:showAsAction="always|withText"/>
 </menu>

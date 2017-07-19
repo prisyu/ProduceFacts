@@ -42,7 +42,7 @@ public class ListProduceActivity extends AppCompatActivity {
             }
         });
 
-        // set up search
+        // set up search bar
         SearchView searchView = (SearchView) findViewById(R.id.search_commodity);
         searchView.setQueryHint("search here");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
@@ -73,6 +73,10 @@ public class ListProduceActivity extends AppCompatActivity {
         return false;
     }
 
+    /*
+        Search for all of the commodities that contain the input string and start next activity.
+        Input: The string inputted by user to search for.
+    */
     protected void searchCommodities(String searchString) {
         List<Commodity> commodityArrayForSearchResult = new ArrayList<Commodity>();
         for (Commodity commodity : commodities) {

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -15,22 +14,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
-
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
-
 public class MainActivity extends AppCompatActivity {
-
     public static List<Commodity> commodityArray;
-    public static List< Fruit > fruitArray;
-    public static List< Vegetable > vegetableArray;
-    public static List< Ornamental > ornamentalArray;
+    public static List<Fruit> fruitArray;
+    public static List<Vegetable> vegetableArray;
+    public static List<Ornamental> ornamentalArray;
 
     public static final String menuItemLanguages[][] = {{"Fruit", "Vegetables", "Ornamentals"}, {"Frutas", "Vegetales", "Ornamentales"}, {"Fruit", "Les Légume", "Ornamentals"}};
     //menu item is ONLY for set title.  The arrays below are for the actual parsing
@@ -43,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     public static int languageSelected = Language.English;
     private AlertDialog languageDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         websiteLink.setMovementMethod(LinkMovementMethod.getInstance());
         websiteLink.setText(Html.fromHtml(getResources().getString(R.string.websiteLink)));
 
-        // set up search
+        // set up search bar
         SearchView searchView = (SearchView) findViewById(R.id.search_main);
         searchView.setQueryHint("search here");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
@@ -75,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // load files
+        // load csv files
         loadFiles();
-
     }
 
     @Override
@@ -133,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 languageDialog = builder.create();
-
             }
 
             languageDialog.show();
@@ -142,13 +133,17 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public void produceSelected(View view){
+    /*
+        Determine which produce button was clicked and prepare for next activity.
+        Input: The view clicked by the user.
+     */
+    public void produceSelected(View view) {
         Button button = (Button) view;
         String produceType = button.getText().toString();
         System.out.println("Selected " + produceType);
 
         Intent intent = new Intent(this, ListProduceActivity.class);
-        if (produceType == menuItemLanguages[languageSelected][0]){
+        if (produceType == menuItemLanguages[languageSelected][0]) {
             ListProduceActivity.commodities = new ArrayList<Commodity>(fruitArray);
         }
         else if (produceType == menuItemLanguages[languageSelected][1]) {
@@ -157,9 +152,13 @@ public class MainActivity extends AppCompatActivity {
         else if (produceType == menuItemLanguages[languageSelected][2]) {
             ListProduceActivity.commodities = new ArrayList<Commodity>(ornamentalArray);
         }
+
         startActivity(intent);
     }
 
+    /*
+        Update the language of the three button labels.
+     */
     public void updateButtons(){
         Button fruitButton = (Button) findViewById(R.id.fruitButton);
         Button vegetableButton = (Button) findViewById(R.id.vegetableButton);
@@ -193,7 +192,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loadFiles(){
+    /*
+        Load the csv files into the Fruit, Vegetable, and Ornamtenal arrays.
+     */
+    public void loadFiles() {
         System.out.println("loading csv files...");
         // actual csv parsing
         System.out.println("parsing fruit files...");
@@ -206,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                             "raw", getPackageName()));
 
             CSVFile csvFile = new CSVFile(inputStream);
-            for(String[] row : csvFile.keyedRows) {
+            for (String[] row : csvFile.keyedRows) {
                 Fruit aFruit = new Fruit();
                 aFruit.name = row[csvFile.headerIndex.get("Name")];
                 aFruit.recommendations = row[csvFile.headerIndex.get(recommendationLanguages[languageSelected])];
@@ -216,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                 aFruit.image = (getResources().getString(R.string.fruitFile) + row[csvFile.headerIndex.get("Image Name")]).replace(' ', '_').replace('-', '_').replace("'", "").toLowerCase();
                 fruitArray.add(aFruit);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error");
         }
 
@@ -239,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 aVegetable.image = (getResources().getString(R.string.vegetableFile) + row[csvFile.headerIndex.get("Image Name")]).replace(' ', '_').replace('-', '_').replace("'", "").toLowerCase();
                 vegetableArray.add(aVegetable);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error");
         }
 
@@ -252,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                             "raw", getPackageName()));
 
             CSVFile csvFile = new CSVFile(inputStream);
-            for(String[] row : csvFile.keyedRows) {
+            for (String[] row : csvFile.keyedRows) {
                 Ornamental aOrnamental = new Ornamental();
                 aOrnamental.name = row[csvFile.headerIndex.get("Name")];
                 aOrnamental.recommendations = row[csvFile.headerIndex.get(recommendationLanguages[languageSelected])];
@@ -270,6 +272,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+        Search for all of the commodities that contain the input string and start next activity.
+        Input: The string inputted by user to search for.
+     */
     protected void searchCommodities(String searchString) {
         List<Commodity> commodityArrayForSearchResult = new ArrayList<Commodity>();
         for (Commodity commodity : commodityArray) {

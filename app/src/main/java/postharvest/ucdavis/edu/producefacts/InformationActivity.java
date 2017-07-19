@@ -3,17 +3,12 @@ package postharvest.ucdavis.edu.producefacts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,23 +36,6 @@ public class InformationActivity extends AppCompatActivity {
 
         WebView infoWebView = (WebView) findViewById(R.id.info_web);
         infoWebView.loadData(information, "text/html", null);
-
-        /*GridView gridview = (GridView) findViewById(R.id.info_grid);
-        gridview.setAdapter(new ImageAdapter(this, "InformationActivity", image_arr));
-        //gridview.setNumColumns(gridview.getAdapter().getCount());
-        gridview.setNumColumns(image_arr.size());
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                System.out.println("Commodity Image clicked = ");
-                System.out.println(image_arr.get(position).image_name);
-
-                Intent intent = new Intent(InformationActivity.this, FullImageActivity.class);
-                FullImageActivity.imageName = image_arr.get(position).image_name;
-                startActivity(intent);
-            }
-        });*/
 
         if (image_arr.isEmpty()) {
             HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.info_horizontal);
@@ -94,21 +72,19 @@ public class InformationActivity extends AppCompatActivity {
         return false;
     }
 
-    protected void parseInformation(){
+    protected void parseInformation() {
         image_arr = new ArrayList<CommodityImage>();
-
         information = processText(information);
-
     }
 
     // Input of file names:
     // <tag = "stuff">file*1902831*</tag>
-    protected String parseFileName(String str){
+    protected String parseFileName(String str) {
         String output = "";
         boolean rightarrow = false;
 
         for (char c : str.toCharArray()) {
-            if (c == '>'){
+            if (c == '>') {
                 rightarrow = true;
                 continue;
             }
@@ -126,42 +102,42 @@ public class InformationActivity extends AppCompatActivity {
         return output;
     }
 
-    protected String parse(String str){
+    protected String parse(String str) {
         String [] output = str.split(": ");
         return output[1];
     }
 
-    protected String processText(String info){
+    protected String processText(String info) {
         String output = "";
-
         String[] splitting = info.split("\n");
-        for(String str : splitting){
-            if (str.contains("<table ")){
+
+        for (String str : splitting) {
+            if (str.contains("<table ")) {
                 output += "<table>";
                 continue;
             }
 
-            if (str.contains("<p>*file")){
+            if (str.contains("<p>*file")) {
                 CommodityImage comImage = new CommodityImage();
                 comImage.image_name = parseFileName(str);
-                if (comImage.image_name != ""){
+                if (comImage.image_name != "") {
                     comImage.image_name = getResources().getString(R.string.photoFile) + comImage.image_name;
                     image_arr.add(comImage);
                 }
             }
             else if (str.contains("<p>Title: ")) {
-                if (!image_arr.isEmpty()){
+                if (!image_arr.isEmpty()) {
                     CommodityImage temp = image_arr.get(image_arr.size() - 1);
                     temp.title = parse(str);
                 }
             }
-            else if (str.contains("<p>Photo Credit: ")){
-                if (!image_arr.isEmpty()){
+            else if (str.contains("<p>Photo Credit: ")) {
+                if (!image_arr.isEmpty()) {
                     CommodityImage temp = image_arr.get(image_arr.size() - 1);
                     temp.photo_credit = parse(str);
                 }
             }
-            else if(str.contains("Photos")){
+            else if(str.contains("Photos")) {
                 //skip
             }
             else {
@@ -170,8 +146,6 @@ public class InformationActivity extends AppCompatActivity {
         }
 
         output = "<font face=\"verdana\">" + output + "</font>";
-
         return output;
     }
-
 }
