@@ -27,12 +27,7 @@ public class InformationActivity extends AppCompatActivity {
         setTitle(label);
         setContentView(R.layout.activity_information);
 
-        System.out.println("Information Activity...");
-        System.out.println(information);
-
         parseInformation();
-        System.out.println("after parsing...");
-        System.out.println(information);
 
         WebView infoWebView = (WebView) findViewById(R.id.info_web);
         infoWebView.loadData(information, "text/html", null);
@@ -50,9 +45,6 @@ public class InformationActivity extends AppCompatActivity {
 
                 imageView.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
-                        System.out.println("Commodity Image clicked = ");
-                        System.out.println(comImage.image_name);
-
                         Intent intent = new Intent(InformationActivity.this, FullImageActivity.class);
                         FullImageActivity.imageName = comImage.image_name;
                         startActivity(intent);

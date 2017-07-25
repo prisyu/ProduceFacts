@@ -34,8 +34,6 @@ public class ListProduceActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                System.out.println("Commodity clicked = ");
-                System.out.println(commodities.get(position).name);
                 Intent intent = new Intent(ListProduceActivity.this, CategoryActivity.class);
                 CategoryActivity.commoditySelected = commodities.get(position);
                 startActivity(intent);
@@ -50,7 +48,6 @@ public class ListProduceActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (!query.isEmpty()) {
-                    System.out.println("Searching for " + query);
                     searchCommodities(query);
                     return true;
                 }

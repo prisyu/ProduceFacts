@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (!query.isEmpty()) {
-                    System.out.println("Searching for " + query);
                     searchCommodities(query);
                     return true;
                 }
@@ -96,15 +95,12 @@ public class MainActivity extends AppCompatActivity {
                                     //loadProgressScreen();
                                     switch (which) {
                                         case Language.English:
-                                            System.out.println("changing to english...");
                                             languageSelected = Language.English;
                                             break;
                                         case Language.Spanish:
-                                            System.out.println("changing to Spanish...");
                                             languageSelected = Language.Spanish;
                                             break;
                                         case Language.French:
-                                            System.out.println("changing to French...");
                                             languageSelected = Language.French;
                                             break;
                                         default:
@@ -140,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
     public void produceSelected(View view) {
         Button button = (Button) view;
         String produceType = button.getText().toString();
-        System.out.println("Selected " + produceType);
 
         Intent intent = new Intent(this, ListProduceActivity.class);
         if (produceType == menuItemLanguages[languageSelected][0]) {
@@ -164,9 +159,7 @@ public class MainActivity extends AppCompatActivity {
         Button vegetableButton = (Button) findViewById(R.id.vegetableButton);
         Button ornamentalButton = (Button) findViewById(R.id.ornamentalButton);
 
-        System.out.println("updating language labels...");
         // update the button labels
-        System.out.println("languageSelected = " + languageSelected);
         switch (languageSelected) {
             case Language.English:
                 fruitButton.setText(menuItemLanguages[languageSelected][0]);
@@ -184,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
                 ornamentalButton.setText(menuItemLanguages[languageSelected][2]);
                 break;
             default:
-                System.out.println("using default in switch");
                 fruitButton.setText(menuItemLanguages[0][0]);
                 vegetableButton.setText(menuItemLanguages[0][1]);
                 ornamentalButton.setText(menuItemLanguages[0][2]);
@@ -196,13 +188,10 @@ public class MainActivity extends AppCompatActivity {
         Load the csv files into the Fruit, Vegetable, and Ornamtenal arrays.
      */
     public void loadFiles() {
-        System.out.println("loading csv files...");
         // actual csv parsing
-        System.out.println("parsing fruit files...");
         try {
             fruitArray = new ArrayList<Fruit>();
             String filename =   getResources().getString(R.string.fruitFile) + languages[languageSelected].toLowerCase();
-            System.out.println(filename);
             InputStream inputStream = getResources().openRawResource(
                     getResources().getIdentifier(filename,
                             "raw", getPackageName()));

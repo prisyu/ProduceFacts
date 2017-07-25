@@ -19,7 +19,6 @@ public class FullImageActivity extends AppCompatActivity {
         setTitle(InformationActivity.label);
         setContentView(R.layout.activity_full_image);
 
-        System.out.println("displaying image = " + imageName);
         final PhotoView imageView = (PhotoView) findViewById(R.id.full_image);
         imageView.setImageResource(getResources().getIdentifier(imageName, "drawable", getPackageName()));
     }

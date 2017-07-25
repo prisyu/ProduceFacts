@@ -1,0 +1,17 @@
+Key Store
+- Key store path: ProduceFacts\keystore\android.jks
+- Password: ucdptc$1ks
+- Key Alias: ProduceFactsKey
+- Key Password: ucdptc$1key
+Certificate
+- Name: Produce Facts
+- Organizational Unit: Postharvest
+- Organization: UC Davis
+- City: Davis
+- State: CA
+- Country Code: US
+
+App signing
+- Name: config
+- Key Alias: UCDavisPostharvestKey
+- Key Password: ucdptc$1
