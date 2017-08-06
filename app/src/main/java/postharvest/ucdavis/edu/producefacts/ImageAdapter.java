@@ -56,7 +56,9 @@ public class ImageAdapter extends BaseAdapter {
         if (contextType == "ListProduceActivity") {
             final Commodity commodity = (Commodity) images.get(position);
 
-            imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(commodity.image, "drawable", mContext.getPackageName()), 150, 150 ));
+            imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(commodity.image, "drawable", mContext.getPackageName()), 125, 125 ));
+            //imageView.setImageResource(mContext.getResources().getIdentifier(commodity.image, "drawable", mContext.getPackageName()));
+            imageView.setMinimumHeight(125);
             imageView.setMaxHeight(125);
             imageView.setBackgroundColor(mContext.getResources().getColor(color.white));
             nameTextView.setText(commodity.name);
@@ -66,6 +68,8 @@ public class ImageAdapter extends BaseAdapter {
             final CommodityImage comImage = (CommodityImage)images.get(position);
 
             imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), mContext.getResources().getIdentifier(comImage.image_name, "drawable", mContext.getPackageName()), 100, 100 ));
+            //imageView.setImageResource(mContext.getResources().getIdentifier(comImage.image_name, "drawable", mContext.getPackageName()));
+            imageView.setMinimumHeight(100);
             imageView.setMaxHeight(100);
             imageView.setBackgroundColor(mContext.getResources().getColor(color.holo_blue_dark));
             nameTextView.setText("");
@@ -93,6 +97,7 @@ public class ImageAdapter extends BaseAdapter {
                     && (halfWidth / inSampleSize) >= reqWidth) {
                 inSampleSize *= 2;
             }
+
         }
 
         return inSampleSize;
