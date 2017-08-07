@@ -28,10 +28,11 @@
             android:columnCount="2"
             android:gravity="center"
             android:horizontalSpacing="10dp"
-            android:verticalSpacing="10dp"
+            android:verticalSpacing="25dp"
             android:numColumns="auto_fit"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:paddingBottom="10dp"
 
             android:stretchMode="columnWidth"
             tools:layout_editor_absoluteX="8dp"
